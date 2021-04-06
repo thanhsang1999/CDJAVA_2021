@@ -1,6 +1,5 @@
-package week3.bai1;
-
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Encode {
 	String result;
@@ -72,5 +71,16 @@ public class Encode {
 	public String result() {
 		return "*"+this.result+"*";
 	}
-
+public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+	int tmpStr = Integer.parseInt(sc.nextLine());
+	ArrayList<String> list = new ArrayList<String>();
+	for (int i = 0; i < tmpStr; i++) {
+		Encode encode = new Encode(sc.nextLine(), sc.nextLine());
+		list.add(encode.result());
+	}
+	for (String string : list) {
+		System.out.println(string);
+	}
+}
 }

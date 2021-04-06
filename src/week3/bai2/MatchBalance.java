@@ -1,12 +1,9 @@
-package week3.bai2;
-
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Scanner;
 import java.util.Stack;
 
 public class MatchBalance {
-	private Double result;
+	private int result;
 	private ArrayList<String> listInput;
 
 	public MatchBalance(String input) {
@@ -14,7 +11,7 @@ public class MatchBalance {
 		// khai bao
 
 		listInput = new ArrayList<String>();
-		this.result = 0d;
+		this.result = 0;
 
 		// xu li input => arraylist
 		String tmpChar = "";
@@ -35,15 +32,15 @@ public class MatchBalance {
 	}
 
 	private void handleMath() {
-		 Stack <Double> tmpStack = new Stack<Double>();
+		 Stack <Integer> tmpStack = new Stack<Integer>();
 	        for (int i=0; i<listInput.size(); i++){
 	            char c = listInput.get(i).charAt(0);
 	            if (isNumber(listInput.get(i))){
-	            	tmpStack.push(Double.parseDouble(listInput.get(i)));
+	            	tmpStack.push(Integer.parseInt(listInput.get(i)));
 	            }else{
-	                double num = 0f;
-	                double num1 = tmpStack.pop();
-	                double num2 = tmpStack.pop();
+	            	int num = 0;
+	                int num1 = tmpStack.pop();
+	                int num2 = tmpStack.pop();
 	                switch (c) {
 	                    case '+' :
 	                    	num = sum(num1, num2);
@@ -66,19 +63,19 @@ public class MatchBalance {
 	         this.result=tmpStack.pop();
 	}
 
-	private double sum(double a, double b) {
+	private int sum(int a, int b) {
 		return b + a;
 	}
 
-	private double subtraction(double a, double b) {
+	private int subtraction(int a, int b) {
 		return b - a;
 	}
 
-	private double multiplication(double a, double b) {
+	private int multiplication(int a, int b) {
 		return b * a;
 	}
 
-	private double division(double a, double b) {
+	private int division(int a, int b) {
 		return b / a;
 	}
 
@@ -88,14 +85,26 @@ public class MatchBalance {
 	}
 
 	public String result() {
-		NumberFormat formatter = new DecimalFormat("#0"); 
-		String tmpResult = formatter.format(this.result);
-		if (String.valueOf(this.result).equals(tmpResult+".0")) {
-			return tmpResult;
-		}else {
-			return String.valueOf(this.result);
-		}
+//		NumberFormat formatter = new DecimalFormat("#0"); 
+//		String tmpResult = formatter.format(this.result);
+//		if (String.valueOf(this.result).equals(tmpResult+".0")) {
+//			return tmpResult;
+//		}else {
+//			return String.valueOf(this.result);
+//		}
+		return String.valueOf(this.result);
+	}
+public static void main(String[] args) {
+	Scanner sc = new Scanner(System.in);
+	int tmpStr = Integer.parseInt(sc.nextLine());
+	ArrayList<String> list = new ArrayList<String>();
+	for (int i = 0; i < tmpStr; i++) {
+		MatchBalance encode = new MatchBalance(sc.nextLine());
+		list.add(encode.result());
+	}
+	for (String string : list) {
+		System.out.println(string);
 		
 	}
-
+}
 }
