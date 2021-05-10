@@ -6,22 +6,46 @@ import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Stack;
 
-public class BigNumber {
+public class BigNumber<T> {
 	public BigNumber() {
 	}
 
-	public String plus(String input1, String input2) {
+	public String plus(T input1, T input2) {
+		String strInput1 = String.valueOf(input1);
+		String strInput2 = String.valueOf(input2);
+		return strPlus(strInput1, strInput2);
+	}
+
+	public String minus(T input1, T input2) {
+		String strInput1 = String.valueOf(input1);
+		String strInput2 = String.valueOf(input2);
+		return strMinus(strInput1, strInput2);
+	}
+
+	public String multiply(T input1, T input2) {
+		String strInput1 = String.valueOf(input1);
+		String strInput2 = String.valueOf(input2);
+		return strMultiply(strInput1, strInput2);
+	}
+
+	public String[] divide(T input1, T input2) {
+		String strInput1 = String.valueOf(input1);
+		String strInput2 = String.valueOf(input2);
+		return strDivide(strInput1, strInput2);
+	}
+
+	public String strPlus(String input1, String input2) {
 		input1 = clear0(input1);
 		input2 = clear0(input2);
 		String result = "";
 		// tien xu ly
 		// String => List<number>
 		// listNumber1 >listNumber2
-		if (input1.charAt(0)=='-'||input2.charAt(0)=='-') {
-			if (input1.charAt(0)=='-'&&input2.charAt(0)=='-') {
-				return "-"+plus(clearMinus(input1), clearMinus(input2));
+		if (input1.charAt(0) == '-' || input2.charAt(0) == '-') {
+			if (input1.charAt(0) == '-' && input2.charAt(0) == '-') {
+				return "-" + strPlus(clearMinus(input1), clearMinus(input2));
 			}
-			return minus(clearMinus(input1), clearMinus(input2));
+			return strMinus(clearMinus(input1), clearMinus(input2));
 		}
 		boolean isGreater = checkNumGreater(input1, input2);// true if input1>=input2
 		ArrayList<Integer> listNumber1 = handleParseListNumber(isGreater ? input1 : input2);
@@ -30,8 +54,7 @@ public class BigNumber {
 		// => 2 list chua so
 		// listNumber1>listNumber2
 		// TODO xu ly
-		
-		
+
 		Stack<Integer> digitalTempMemory = new Stack<Integer>();
 		Stack<Integer> tmpResult = new Stack<Integer>();
 		for (int i = listNumber1.size() - 1; i >= 0; i--) {
@@ -75,7 +98,7 @@ public class BigNumber {
 		return result;
 	}
 
-	public String minus(String input1, String input2) {
+	public String strMinus(String input1, String input2) {
 		input1 = clear0(input1);
 		input2 = clear0(input2);
 		String result = "";
@@ -86,14 +109,14 @@ public class BigNumber {
 		ArrayList<Integer> listNumber1 = handleParseListNumber(isGreater ? input1 : input2);
 		ArrayList<Integer> listNumber2 = handleParseListNumberLess(!isGreater ? input1 : input2,
 				Math.abs(input1.length() - input2.length()));
-		
-		if (input1.charAt(0)=='-'||input2.charAt(0)=='-') {
-			if (input1.charAt(0)=='-'&&input2.charAt(0)=='-') {
-				return "-"+plus(clearMinus(input1), clearMinus(input2));
+
+		if (input1.charAt(0) == '-' || input2.charAt(0) == '-') {
+			if (input1.charAt(0) == '-' && input2.charAt(0) == '-') {
+				return "-" + strPlus(clearMinus(input1), clearMinus(input2));
 			}
-			return plus(clearMinus(input1), clearMinus(input2));
+			return strPlus(clearMinus(input1), clearMinus(input2));
 		}
-		
+
 		// => 2 list chua so
 		// listNumber1>listNumber2
 		// TODO xu ly
@@ -119,18 +142,18 @@ public class BigNumber {
 		return clear0(result);
 	}
 
-	public String multiply(String input1, String input2) {
+	public String strMultiply(String input1, String input2) {
 		input1 = clear0(input1);
 		input2 = clear0(input2);
 		String result = "0";
-		
-		if (input1.charAt(0)=='-'||input2.charAt(0)=='-') {
-			if (input1.charAt(0)=='-'&&input2.charAt(0)=='-') {
-				return multiply(clearMinus(input1), clearMinus(input2));
+
+		if (input1.charAt(0) == '-' || input2.charAt(0) == '-') {
+			if (input1.charAt(0) == '-' && input2.charAt(0) == '-') {
+				return strMultiply(clearMinus(input1), clearMinus(input2));
 			}
-			return "-"+multiply(clearMinus(input1), clearMinus(input2));
+			return "-" + strMultiply(clearMinus(input1), clearMinus(input2));
 		}
-		
+
 		// tien xu ly
 		// String => List<number>
 		boolean isGreater = checkNumGreater(input1, input2);// true if input1>=input2
@@ -146,7 +169,7 @@ public class BigNumber {
 		}
 		String zeros = "";
 		while (digitalTempMemory.size() > 0) {
-			result = plus(result, digitalTempMemory.poll() + zeros);
+			result = strPlus(result, digitalTempMemory.poll() + zeros);
 			zeros += "0";
 		}
 		return result;
@@ -155,12 +178,12 @@ public class BigNumber {
 	public String multiplyMini(String numberStr, int size) {
 		String result = "0";
 		for (int i = 0; i < size; i++) {
-			result = plus(result, numberStr);
+			result = strPlus(result, numberStr);
 		}
 		return result;
 	}
 
-	public String[] divide(String numberBiger, String numberSmaller) {
+	public String[] strDivide(String numberBiger, String numberSmaller) {
 		String result[] = { "", "0" };
 		numberBiger = clear0(numberBiger);
 		numberSmaller = clear0(numberSmaller);
@@ -169,12 +192,12 @@ public class BigNumber {
 			result[1] = numberBiger;
 			return result;
 		}
-		if (numberBiger.charAt(0)=='-'||numberSmaller.charAt(0)=='-') {
-			if (numberBiger.charAt(0)=='-'&&numberSmaller.charAt(0)=='-') {
-				return divide(clearMinus(numberBiger), clearMinus(numberSmaller));
+		if (numberBiger.charAt(0) == '-' || numberSmaller.charAt(0) == '-') {
+			if (numberBiger.charAt(0) == '-' && numberSmaller.charAt(0) == '-') {
+				return strDivide(clearMinus(numberBiger), clearMinus(numberSmaller));
 			}
-			String [] tmpRs = divide(clearMinus(numberBiger), clearMinus(numberSmaller));
-			tmpRs[0]="-"+tmpRs[0];
+			String[] tmpRs = strDivide(clearMinus(numberBiger), clearMinus(numberSmaller));
+			tmpRs[0] = "-" + tmpRs[0];
 			return tmpRs;
 		}
 		Queue<Integer> tmpResult = new LinkedList<>();
@@ -197,27 +220,27 @@ public class BigNumber {
 		while (!isStop) {
 			String tmpBignumber = preProcess.pop();
 			for (int i = 9; i >= 1; i--) {
-				String surplus = minus(tmpBignumber, multiplyMini(numberSmaller, i));
-				
+				String surplus = strMinus(tmpBignumber, multiplyMini(numberSmaller, i));
+
 				if (checkPositiveNumber(surplus)) {
 					tmpResult.add(i);
 					String nextBigNumber = surplus;
 					if (stackNumberBiger.size() > 0) {
 						nextBigNumber = surplus + stackNumberBiger.poll();
 						if (!checkNumGreater(nextBigNumber, numberSmaller)) {
-							 tmpResult.add(0);
-							 if (stackNumberBiger.size() > 0) {
-									nextBigNumber = nextBigNumber + stackNumberBiger.poll();
-								}
+							tmpResult.add(0);
+							if (stackNumberBiger.size() > 0) {
+								nextBigNumber = nextBigNumber + stackNumberBiger.poll();
+							}
 						}
 					}
 					if (!checkNumGreater(nextBigNumber, numberSmaller)) {
-						 if(stackNumberBiger.size() <= 0) {
-								result[1] = clear0(nextBigNumber);
-								isStop = true;
-								break;
-							}
-						
+						if (stackNumberBiger.size() <= 0) {
+							result[1] = clear0(nextBigNumber);
+							isStop = true;
+							break;
+						}
+
 					} else {
 						preProcess.add(nextBigNumber);
 					}
@@ -285,6 +308,7 @@ public class BigNumber {
 		}
 		return result;
 	}
+
 	public boolean checkNumGreaterEqual(String input1, String input2) {
 		// loai bo 0 o dau
 
@@ -298,13 +322,14 @@ public class BigNumber {
 			for (int i = 0; i < nums1.size(); i++) {
 				if (nums1.get(i) == nums2.get(i)) {
 					result = true;
-				}else {
+				} else {
 					return false;
 				}
 			}
 		}
 		return result;
 	}
+
 	private String clear0(String input1) {
 		while (true && input1.length() > 1) {
 			if (String.valueOf(input1.charAt(0)).equals("0")) {
@@ -315,6 +340,7 @@ public class BigNumber {
 		}
 		return input1;
 	}
+
 	private String clearMinus(String input1) {
 		while (true && input1.length() > 1) {
 			if (String.valueOf(input1.charAt(0)).equals("-")) {
@@ -325,6 +351,7 @@ public class BigNumber {
 		}
 		return input1;
 	}
+
 	public boolean checkPositiveNumber(String number) {
 		if (String.valueOf(number.charAt(0)).equals("-")) {
 			return false;
@@ -335,11 +362,11 @@ public class BigNumber {
 	private ArrayList<Integer> handleParseListNumber(String str) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
 		for (int i = 0; i < str.length(); i++) {
-			if (str.charAt(i)=='-'&&i==0) {
-				result.add(Integer.parseInt(String.valueOf("-"+str.charAt(++i))));
-				
-			}else {
-				result.add(Integer.parseInt(String.valueOf(str.charAt(i))));				
+			if (str.charAt(i) == '-' && i == 0) {
+				result.add(Integer.parseInt(String.valueOf("-" + str.charAt(++i))));
+
+			} else {
+				result.add(Integer.parseInt(String.valueOf(str.charAt(i))));
 			}
 		}
 		return result;
@@ -347,19 +374,19 @@ public class BigNumber {
 
 	private ArrayList<Integer> handleParseListNumberLess(String str, int differenceNum) {
 		ArrayList<Integer> result = new ArrayList<Integer>();
-		if (str.charAt(0)=='-') {
-			differenceNum=differenceNum+1;
+		if (str.charAt(0) == '-') {
+			differenceNum = differenceNum + 1;
 		}
 		for (int i = 0; i < str.length() + differenceNum; i++) {
 			if (i < differenceNum) {
 				result.add(0);
 				continue;
 			}
-			if (str.charAt(i - differenceNum)=='-'&&(i - differenceNum)==0) {
-				result.add(Integer.parseInt(String.valueOf("-"+str.charAt(++i - differenceNum))));	
-				
-			}else {
-				result.add(Integer.parseInt(String.valueOf(str.charAt(i - differenceNum))));		
+			if (str.charAt(i - differenceNum) == '-' && (i - differenceNum) == 0) {
+				result.add(Integer.parseInt(String.valueOf("-" + str.charAt(++i - differenceNum))));
+
+			} else {
+				result.add(Integer.parseInt(String.valueOf(str.charAt(i - differenceNum))));
 			}
 		}
 		return result;

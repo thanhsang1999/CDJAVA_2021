@@ -64,7 +64,7 @@ public class MyArrayList<T> {
 	public int indexOf(T input) {
 		T[] tmpData1 = cloneArr(this.data);
 		for (int i = 0; i < tmpData1.length; i++) {
-			if (input==tmpData1[i]) {
+			if (input.equals(tmpData1[i])) {
 				return i;
 			}
 		}
@@ -76,7 +76,7 @@ public class MyArrayList<T> {
 		int result = -1;
 		for (int i = 0; i < tmpData1.length; i++) {
 			for (int j = 0; j < input.length; j++) {
-				if (tmpData1[i]==input[j]) {
+				if (tmpData1[i].equals(input[j])) {
 					countCorrect++;
 					result=i;
 					i++;
@@ -104,7 +104,7 @@ public class MyArrayList<T> {
 		int result = -1;
 		for (int i = 0; i < tmpData1.length; i++) {
 			for (int j = 0; j < tmpInput.length; j++) {
-				if (tmpData1[i]==tmpInput[j]) {
+				if (tmpData1[i].equals(tmpInput[j])) {
 					countCorrect++;
 					result=i;
 					i++;
@@ -128,7 +128,7 @@ public class MyArrayList<T> {
 	public int lastIndexOf(T input) {
 		T[] tmpData1 = cloneArr(this.data);
 		for (int i = tmpData1.length-1; i >=0 ; i--) {
-			if (input==tmpData1[i]) {
+			if (input.equals(tmpData1[i])) {
 				return i;
 			}
 		}
@@ -140,7 +140,7 @@ public class MyArrayList<T> {
 		int result = -1;
 		for (int i = tmpData1.length-1; i >=0; i--) {
 			for (int j = input.length-1; j >=0; j--) {
-				if (tmpData1[i]==input[j]) {
+				if (tmpData1[i].equals(input[j])) {
 					countCorrect++;
 					result=i;
 					i--;
@@ -168,7 +168,7 @@ public class MyArrayList<T> {
 		int result = -1;
 		for (int i = tmpData1.length-1; i >=0; i--) {
 			for (int j = tmpIndex.length-1; j >=0; j--) {
-				if (tmpData1[i]==tmpIndex[j]) {
+				if (tmpData1[i].equals(tmpIndex[j])) {
 					countCorrect++;
 					result=i;
 					i--;
@@ -198,6 +198,11 @@ public class MyArrayList<T> {
 		}
 		return new MyArrayList<>(tmpResult);
 	}
+	
+	public T get(int index) {
+		return data[index];
+	}
+	
 	public int size() {
 		return data.length;
 	}

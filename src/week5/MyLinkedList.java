@@ -40,6 +40,20 @@ public class MyLinkedList<T> {
 		return true;
 	}
 
+	public T get(int index) {
+		if (first.equals(null)) {
+			return null;
+		}
+		index=index<0?0:index;
+		index=index>=size?size-1:index;
+		Node<T> tmpCurrent = first;
+		for (int i = 0; i < index; i++) {
+			tmpCurrent = tmpCurrent.next;
+		}
+		T result = tmpCurrent.item;
+		return result;
+	}
+
 	private void insertNode(T item, Node<T> node) {
 		// b1 lay prev node
 		Node<T> nodePrev = node.getPrev();
@@ -192,47 +206,48 @@ public class MyLinkedList<T> {
 		int result = 0;
 		int index = 0;
 		while (current != null) {
-			
+
 			if (current.item.equals(currentInput.item)) {
 				countCorrect++;
-				//trung vi tri dau tien
+				// trung vi tri dau tien
 				Node<T> tmpCurrent = current;
 				Node<T> tmpCurrentInput = currentInput;
-				for (int i = 0; i < input.size()-1; i++) {
-					tmpCurrent=tmpCurrent.next;
-					if (tmpCurrent==null) break;
-					tmpCurrentInput=tmpCurrentInput.next;
-					if(tmpCurrent.item.equals(tmpCurrentInput.item)) {
+				for (int i = 0; i < input.size() - 1; i++) {
+					tmpCurrent = tmpCurrent.next;
+					if (tmpCurrent == null)
+						break;
+					tmpCurrentInput = tmpCurrentInput.next;
+					if (tmpCurrent.item.equals(tmpCurrentInput.item)) {
 						countCorrect++;
-					}else {
-						countCorrect=0;
+					} else {
+						countCorrect = 0;
 						current = current.next;
 						index++;
 						break;
 					}
 				}
-				if(countCorrect==input.size()) {
+				if (countCorrect == input.size()) {
 					return index;
-				}else {
-					countCorrect=0;
+				} else {
+					countCorrect = 0;
 					current = current.next;
 					index++;
 				}
-			}else {
+			} else {
 				current = current.next;
 				index++;
 			}
-			
-			
+
 		}
 		return -1;
 	}
+
 	public int lastIndexOf(T input) {
 		Node<T> current = last;
 		for (int i = 0; i < size; i++) {
 			T tmpValue = current.item;
 			if (tmpValue.equals(input)) {
-				return size()-++i;
+				return size() - ++i;
 			}
 			current = current.prev;
 		}
@@ -245,59 +260,59 @@ public class MyLinkedList<T> {
 		int countCorrect = 0;
 		int index = 0;
 		while (current != null) {
-			
+
 			if (current.item.equals(currentInput.item)) {
 				countCorrect++;
-				//trung vi tri dau tien
+				// trung vi tri dau tien
 				Node<T> tmpCurrent = current;
 				Node<T> tmpCurrentInput = currentInput;
-				for (int i = 0; i < input.size()-1; i++) {
-					tmpCurrent=tmpCurrent.prev;
-					if (tmpCurrent==null) break;
-					tmpCurrentInput=tmpCurrentInput.prev;
-					if(tmpCurrent.item.equals(tmpCurrentInput.item)) {
+				for (int i = 0; i < input.size() - 1; i++) {
+					tmpCurrent = tmpCurrent.prev;
+					if (tmpCurrent == null)
+						break;
+					tmpCurrentInput = tmpCurrentInput.prev;
+					if (tmpCurrent.item.equals(tmpCurrentInput.item)) {
 						countCorrect++;
-					}else {
-						countCorrect=0;
+					} else {
+						countCorrect = 0;
 						current = current.prev;
 						index++;
 						break;
 					}
 				}
-				if(countCorrect==input.size()) {
-					return size-(index+input.size);
-				}else {
-					countCorrect=0;
+				if (countCorrect == input.size()) {
+					return size - (index + input.size);
+				} else {
+					countCorrect = 0;
 					current = current.prev;
 					index++;
 				}
-			}else {
+			} else {
 				current = current.prev;
 				index++;
 			}
-			
-			
+
 		}
 		return -1;
 	}
-	
+
 	public MyLinkedList<T> sup(int start, int length) {
-		start=start<0?0:start;
-		length=length<0?0:length;
-		start=start>size()?size():start;
-		length=length>size()-start?size()-start:length;
+		start = start < 0 ? 0 : start;
+		length = length < 0 ? 0 : length;
+		start = start > size() ? size() : start;
+		length = length > size() - start ? size() - start : length;
 		MyLinkedList<T> result = new MyLinkedList<T>();
 		Node<T> current = first;
-		for (int i = 0; i < start+length; i++) {
-			if(i>=start) {
+		for (int i = 0; i < start + length; i++) {
+			if (i >= start) {
 				result.add(current.item);
 			}
-			current=current.next;
+			current = current.next;
 		}
 		return result;
-		
+
 	}
-	
+
 	public int size() {
 		return size;
 	}
